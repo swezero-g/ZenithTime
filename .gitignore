@@ -1,0 +1,11 @@
+# Node / Nuxt
+node_modules/
+.nuxt/
+.output/
+dist/
+.env
+
+# .NET
+bin/
+obj/
+appsettings.Development.json
