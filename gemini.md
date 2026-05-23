@@ -83,32 +83,32 @@ The state cycle transitions as follows:
 1. Visual Pulse: Trigger a XAML Storyboard animation causing the background Path to softly pulse/glow (3-4 times) in Orange/Red (End of Work) or Blue (End of Break) to catch the user's eye in the peripheral vision.
 2. Audio Cue: Play a discrete, native Windows notification sound using System.Media.SystemSounds.Asterisk.Play() to avoid external asset dependencies.
 
-5. File Structure Guidance for Gemini CLI
+### 5. File Structure Guidance for Gemini CLI
 When implementing, generate the project across exactly three core native files:
-1. PomodoroClock.csproj: Core SDK-style project file targetting .NET 8.0 or .NET 10.0 with WinExe output types and UseWPF set to true. No NuGet packages.
+1. ZenithTime.csproj: Core SDK-style project file targeting .NET 10.0-windows with WinExe output types and UseWPF set to true. No NuGet packages.
 2. MainWindow.xaml: Declarative UI layout containing the custom Vector Path geometry, Triggers for hover expansions, and bindings for the state-driven button layout.
-3. MainWindow.xaml.cs: Code-behind containing the event handlers for display resolution shifts, native mouse interactions, clock routines, and the atomic Pomodoro timer engine.
+3. MainWindow.xaml.cs: Code-behind (namespace ZenithTime) containing the event handlers for display resolution shifts, native mouse interactions, clock routines, and the atomic Pomodoro timer engine.
 
 ---
 
 ## 6. Development Roadmap & Checklist
 
-- [ ] 1. Setup Project Environment
-  - [ ] Create ZenithTime.csproj targeting .NET 8.0/10.0-windows with UseWPF set to true.
-  - [ ] Confirm project builds with zero NuGet dependencies.
+- [x] 1. Setup Project Environment
+  - [x] Create ZenithTime.csproj targeting .NET 10.0-windows with UseWPF set to true.
+  - [x] Confirm project builds with zero NuGet dependencies.
 
-- [ ] 2. Implement Main Window Shell & Custom Geometry
-  - [ ] Configure Window properties (Topmost, AllowsTransparency, WindowStyle=None).
-  - [ ] Write XAML PathGeometry for the outward-curving top wings and rounded bottom.
-  - [ ] Implement Window_MouseEnter and Window_MouseLeave Storyboards for smooth vertical slide expansion.
+- [x] 2. Implement Main Window Shell & Custom Geometry
+  - [x] Configure Window properties (Topmost, AllowsTransparency, WindowStyle=None).
+  - [x] Write XAML PathGeometry for the outward-curving top wings and rounded bottom.
+  - [x] Implement Window_MouseEnter and Window_MouseLeave Storyboards for smooth vertical slide expansion.
 
-- [ ] 3. Dynamic Display & Resolution Centering
-  - [ ] Implement RecenterWindow calculation using SystemParameters.PrimaryScreenWidth.
-  - [ ] Wire up SystemEvents.DisplaySettingsChanged to fire RecenterWindow automatically.
+- [x] 3. Dynamic Display & Resolution Centering
+  - [x] Implement RecenterWindow calculation using SystemParameters.PrimaryScreenWidth.
+  - [x] Wire up SystemEvents.DisplaySettingsChanged to fire RecenterWindow automatically.
 
-- [ ] 4. Core Clock Module
-  - [ ] Set up DispatcherTimer for the digital clock display.
-  - [ ] Implement click handler on TxtClock to toggle between HH:mm and HH:mm:ss formats.
+- [x] 4. Core Clock Module
+  - [x] Set up DispatcherTimer for the digital clock display.
+  - [x] Implement click handler on TxtClock to toggle between HH:mm and HH:mm:ss formats.
 
 - [ ] 5. Pomodoro Engine & Smart UI
   - [ ] Build the state machine logic (Idle, Work, Break, Paused).

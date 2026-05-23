@@ -5,8 +5,89 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZenithTime"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="ZenithTime" Height="150" Width="240"
+        WindowStyle="None" AllowsTransparency="True" Topmost="True" 
+        Background="Transparent" ShowInTaskbar="False" WindowStartupLocation="Manual"
+        Top="0">
+    <Window.Resources>
+        <Storyboard x:Key="ExpandWindow">
+            <DoubleAnimation Storyboard.TargetName="BackgroundPath" 
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                             To="2.5" Duration="0:0:0.3">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="MainContent" 
+                             Storyboard.TargetProperty="Opacity"
+                             To="1" Duration="0:0:0.2" BeginTime="0:0:0.1"/>
+        </Storyboard>
+        <Storyboard x:Key="CollapseWindow">
+            <DoubleAnimation Storyboard.TargetName="BackgroundPath" 
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                             To="1.0" Duration="0:0:0.3">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="MainContent" 
+                             Storyboard.TargetProperty="Opacity"
+                             To="0" Duration="0:0:0.1"/>
+        </Storyboard>
+    </Window.Resources>
 
+    <Grid x:Name="RootGrid">
+        <Path x:Name="BackgroundPath" Fill="#1A1A1A" Stroke="#333333" StrokeThickness="1.5"
+              VerticalAlignment="Top" HorizontalAlignment="Center" Width="200" Height="45">
+            <Path.RenderTransform>
+                <ScaleTransform ScaleY="1.0" CenterY="0"/>
+            </Path.RenderTransform>
+            <Path.Data>
+                <PathGeometry>
+                    <PathFigure StartPoint="0,0" IsClosed="True">
+                        <!-- Top Edge -->
+                        <LineSegment Point="200,0" />
+                        <!-- Right Side Down -->
+                        <LineSegment Point="200,10" />
+                        <!-- Bottom Right Corner (Inward/Organic) -->
+                        <BezierSegment Point1="200,35" Point2="180,45" Point3="150,45" />
+                        <!-- Bottom Edge -->
+                        <LineSegment Point="50,45" />
+                        <!-- Bottom Left Corner (Inward/Organic) -->
+                        <BezierSegment Point1="20,45" Point2="0,35" Point3="0,10" />
+                        <!-- Left Side Up -->
+                        <LineSegment Point="0,0" />
+                    </PathFigure>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5,0,0">
+            <TextBlock x:Name="TxtClock" Text="14:35" Foreground="White" FontSize="20" 
+                       HorizontalAlignment="Center" FontWeight="SemiBold" Cursor="Hand"
+                       FontFamily="Segoe UI Variable Display, Segoe UI"
+                       MouseDown="TxtClock_MouseDown"/>
+            
+            <StackPanel x:Name="MainContent" Opacity="0" Margin="0,10,0,0">
+                <!-- Pomodoro Controls will go here -->
+                <Button Content="▶ Start" Background="#22C55E" Foreground="White" BorderThickness="0"
+                        Padding="15,5" FontSize="14" FontWeight="Bold">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="15"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
+        </StackPanel>
     </Grid>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="MouseEnter">
+            <BeginStoryboard Storyboard="{StaticResource ExpandWindow}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="MouseLeave">
+            <BeginStoryboard Storyboard="{StaticResource CollapseWindow}"/>
+        </EventTrigger>
+    </Window.Triggers>
 </Window>
